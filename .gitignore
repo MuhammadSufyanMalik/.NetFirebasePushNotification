@@ -9,9 +9,10 @@
 *.user
 *.userosscache
 *.sln.docstates
-*.private_key.json
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
+
+private_key.json
 
 # Mono auto generated files
 mono_crash.*
