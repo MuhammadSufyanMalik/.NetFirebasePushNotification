@@ -165,6 +165,40 @@ namespace PushNotificationDemo.Concrete
             }
         }
 
-
+        /// <summary>
+        /// This method is used to send notification to the clients using topic
+        /// </summary>
+        /// <returns></returns>
+        public async Task SendNotificationUsingTopic()
+        {
+            try
+            {
+                // The topic name can be optionally prefixed with "/topics/".
+                var topic = "highScores"; // "highScores" is the topic name change with your topic name
+                var message = new Message()
+                {
+                    Data = new Dictionary<string, string>()
+                    {
+                    { "userId", $"userId" },
+                     { "time", $"{DateTime.Now}" },
+                     },
+                    Notification = new Notification()
+                    {
+                        Title = "TestNotification",
+                        Body = "Hello!"
+                    },
+                    Topic = topic,
+                };
+                // Send a message to the devices subscribed to the provided topic.
+                string response = await _firebaseMessaging.SendAsync(message);
+                // Response is a message ID string.
+                Console.WriteLine("Successfully sent message: " + response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error sending notification: " + ex.Message);
+                throw;
+            }
+        }
     }
 }

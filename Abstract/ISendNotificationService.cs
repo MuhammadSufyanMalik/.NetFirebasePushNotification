@@ -20,5 +20,12 @@
         /// </summary>
         /// <returns></returns>
         Task<List<string>> SendNotificationMultipleAsync();
+
+        /// <summary>
+        /// This method is used to send notification to the clients using topic
+        /// </summary>
+        /// <returns></returns>
+        Task SendNotificationUsingTopic();
+
     }
 }

@@ -76,5 +76,6 @@ namespace PushNotificationDemo.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
     }
 }
