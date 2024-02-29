@@ -7,9 +7,6 @@ namespace PushNotificationDemo.Controllers
     [Route("[controller]")]
     public class FirebaseNotificationController : ControllerBase
     {
-
-
-
         private readonly ILogger<FirebaseNotificationController> _logger;
 
         private readonly ISendNotificationService _sendNotificationService;
