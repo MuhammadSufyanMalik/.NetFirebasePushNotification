@@ -18,7 +18,6 @@ FirebaseApp.Create(new AppOptions
 
 });
 Console.WriteLine("Firebase Admin SDK initialized");
-//var firebaseMessaging = FirebaseMessaging.DefaultInstance;
 builder.Services.AddSingleton(FirebaseMessaging.DefaultInstance);
 
 
