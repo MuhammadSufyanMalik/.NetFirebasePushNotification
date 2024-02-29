@@ -26,7 +26,7 @@ namespace PushNotificationDemo.Controllers
         public async Task<IActionResult> SendNotificationAsync()
         {
             List<string> responseIdStrings = new();
-            // This registration token comes from the client FCM SDKs.
+            // This Device Registration Token registration token comes from the client.
             var registrationToken = "fnfqJqzsTLyRtMqAY3U89i:APA91bEKZEJVlpEC8dYbv5i35oE7WFHtz_-RC4SW3I6tZYFmZqiPUc3PuBZSb7s9xHDaz_m7K686Kh9u0vo1R8Hb1mRg1V4bk7w57tPwcEibaZAE4Z2wpPU1wiHNbqAak-c6WxB88Xor";
 
             // See documentation on defining a message payload.
