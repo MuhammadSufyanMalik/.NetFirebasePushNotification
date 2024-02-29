@@ -14,5 +14,11 @@
         /// <param name="length"></param>
         /// <returns></returns>
         Task<List<string>> SendNotificationSingleLoopAsync(int length);
+
+        /// <summary>
+        /// This method is used to send notification to multiple clients with multiple user registration tokens
+        /// </summary>
+        /// <returns></returns>
+        Task<List<string>> SendNotificationMultipleAsync();
     }
 }

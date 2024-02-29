@@ -13,6 +13,7 @@ namespace PushNotificationDemo.Concrete
             _firebaseMessaging = firebaseMessaging;
             _logger = logger;
         }
+
         /// <summary>
         /// This method is used to send notification to the client for a specific user registration token once
         /// </summary>
@@ -22,7 +23,7 @@ namespace PushNotificationDemo.Concrete
             try
             {
                 // This Device Registration Token registration token comes from the client.
-                var registrationToken = "fnfqJqzsTLyRtMqAY3U89i:APA91bEKZEJVlpEC8dYbv5i35oE7WFHtz_-RC4SW3I6tZYFmZqiPUc3PuBZSb7s9xHDaz_m7K686Kh9u0vo1R8Hb1mRg1V4bk7w57tPwcEibaZAE4Z2wpPU1wiHNbqAak-c6WxB88Xor";
+                var registrationToken = "YOUR_REGISTRATION_TOKEN";
                 int userId = 1;
                 var message = new Message()
                 {
@@ -66,7 +67,7 @@ namespace PushNotificationDemo.Concrete
             {
                 List<string> responseIdStrings = new();
                 // This Device Registration Token registration token comes from the client.
-                var registrationToken = "fnfqJqzsTLyRtMqAY3U89i:APA91bEKZEJVlpEC8dYbv5i35oE7WFHtz_-RC4SW3I6tZYFmZqiPUc3PuBZSb7s9xHDaz_m7K686Kh9u0vo1R8Hb1mRg1V4bk7w57tPwcEibaZAE4Z2wpPU1wiHNbqAak-c6WxB88Xor";
+                var registrationToken = "YOUR_REGISTRATION_TOKEN";
 
                 // See documentation on defining a message payload.
 
@@ -105,6 +106,65 @@ namespace PushNotificationDemo.Concrete
                 throw;
             }
         }
+
+        /// <summary>
+        /// This method is used to send notification to multiple clients with multiple user registration tokens
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<string>> SendNotificationMultipleAsync()
+        {
+            try
+            {
+                // Create a list containing up to 500 registration tokens.
+                // These registration tokens come from the client FCM SDKs.
+                var registrationTokens = new List<string>()
+                    {
+                                "YOUR_REGISTRATION_TOKEN_1",
+                    // ...
+                                "YOUR_REGISTRATION_TOKEN_n",
+                    };
+                var message = new MulticastMessage()
+                {
+                    Tokens = registrationTokens,
+                    Data = new Dictionary<string, string>()
+                    {
+                    { "userId", $"userId" },
+                     { "time", $"{DateTime.Now}" },
+                     },
+                    Notification = new Notification()
+                    {
+                        Title = "TestNotification",
+                        Body = "Hello!"
+                    },
+                };
+                var response = await FirebaseMessaging.DefaultInstance.SendEachForMulticastAsync(message);
+                // See the BatchResponse reference documentation
+                // for the contents of response.
+                Console.WriteLine($"{response.SuccessCount} messages were sent successfully");
+                if (response.FailureCount > 0)
+                {
+                    var failedTokens = new List<string>();
+                    for (var i = 0; i < response.Responses.Count; i++)
+                    {
+                        if (!response.Responses[i].IsSuccess)
+                        {
+                            // The order of responses corresponds to the order of the registration tokens.
+                            failedTokens.Add(registrationTokens[i]);
+                        }
+                    }
+
+                    Console.WriteLine($"List of tokens that caused failures: {failedTokens}");
+                    return failedTokens;
+                }
+                return new List<string>();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error sending notification: " + ex.Message);
+                throw;
+            }
+        }
+
 
     }
 }

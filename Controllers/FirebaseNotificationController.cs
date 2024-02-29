@@ -56,5 +56,25 @@ namespace PushNotificationDemo.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+
+        /// <summary>
+        /// This method is used to send notification to multiple clients
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost, Route("[action]")]
+        public async Task<IActionResult> SendNotificationMultipleAsync()
+        {
+            try
+            {
+                var response = await _sendNotificationService.SendNotificationMultipleAsync();
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error sending notification: " + ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
